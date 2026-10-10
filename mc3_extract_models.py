@@ -1720,7 +1720,7 @@ def extract_city_models(data, outdir, pck_path=None, ppf_path=None, channel_orde
                             tsfx = '_t%02x%02x%02x' % tuple(int(round(x * 255)) for x in bc)
                             tint_of[tsfx] = bc
                         mat_kinds.add((tex, kind, tsfx))
-                        fh.write(f"usemtl {os.path.splitext(tex)[0]}{tsfx}{kind}\n")
+                        fh.write(f"usemtl {os.path.splitext(tex)[0]}\n")
                     else:
                         tsfx = ''
                         fh.write("usemtl no_texture\n")
@@ -1823,7 +1823,7 @@ def extract_city_models(data, outdir, pck_path=None, ppf_path=None, channel_orde
                             wsfx = '_t%02x%02x%02x' % tuple(int(round(x * 255)) for x in wtint)
                             tint_of[wsfx] = wtint
                         mat_kinds.add((wt, '_win', wsfx))
-                        fh.write(f"g {SLOT_NAMES[k]}_c{ci}_win\nusemtl {os.path.splitext(wt)[0]}{wsfx}_win\n")
+                        fh.write(f"g {SLOT_NAMES[k]}_c{ci}_win\nusemtl {os.path.splitext(wt)[0]}\n")
                         if cols is not None:
                             for p, c3 in zip(w2, cols):
                                 fh.write(f"v {p[0]:.4f} {p[1]:.4f} {p[2]:.4f} "
@@ -2028,7 +2028,7 @@ def extract_city_models(data, outdir, pck_path=None, ppf_path=None, channel_orde
             tex, kind = entry[0], entry[1]
             tsfx = entry[2] if len(entry) > 2 else ''
             kd = tint_of.get(tsfx, (1.0, 1.0, 1.0))
-            f.write(f"\nnewmtl {os.path.splitext(tex)[0]}{tsfx}{kind}\n"
+            f.write(f"\nnewmtl {os.path.splitext(tex)[0]}\n"
                     f"Kd {kd[0]:.3f} {kd[1]:.3f} {kd[2]:.3f}\n"
                     f"map_Kd ../textures/{tex}\n")
             if kind == '_alpha':
@@ -2396,7 +2396,7 @@ def extract_prop_models(data, outdir, pck_path=None, channel_order='rgba', glow_
                                     tex, kind = at, '_add'
                                     stat['flares'] += 1
                             mat_kinds.add((tex, kind))
-                            fh.write(f"usemtl {os.path.splitext(tex)[0]}{kind}\n")
+                            fh.write(f"usemtl {os.path.splitext(tex)[0]}\n")
                         else:
                             fh.write("usemtl no_texture\n")
                         # baked lighting from V4-8 (84% of prop vertices;
@@ -2487,7 +2487,7 @@ def extract_prop_models(data, outdir, pck_path=None, channel_order='rgba', glow_
         f.write("newmtl no_texture\nKd 1 1 1\n")   # no texture (incl. a reference to the texture 'none'): colour from the vertex colours
 
         for tex, kind in sorted(mat_kinds):
-            f.write(f"\nnewmtl {os.path.splitext(tex)[0]}{kind}\nKd 1 1 1\nmap_Kd ../textures/{tex}\n")
+            f.write(f"\nnewmtl {os.path.splitext(tex)[0]}\nKd 1 1 1\nmap_Kd ../textures/{tex}\n")
             if kind == '_alpha':
                 f.write(f"map_d ../textures/{tex}\n")
             elif kind == '_add':
